@@ -1,0 +1,14 @@
+server:
+  port: 8080 # Porta onde a API vai rodar
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: SYSTEM
+    password: mig2505
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # O Hibernate cria/atualiza as tabelas automaticamente
+    show-sql: true # Mostra os comandos SQL no terminal
