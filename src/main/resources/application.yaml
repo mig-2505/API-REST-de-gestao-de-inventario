@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: SYSTEM
-    password: ${DB_PASSWORD}
+    password: mig2505
     driver-class-name: oracle.jdbc.OracleDriver
 
   jpa:
