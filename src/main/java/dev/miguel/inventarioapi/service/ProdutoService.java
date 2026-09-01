@@ -1,5 +1,7 @@
 package dev.miguel.inventarioapi.service;
 
+import dev.miguel.inventarioapi.dto.ProdutoRequestDTO;
+import dev.miguel.inventarioapi.dto.ProdutoResponseDTO;
 import dev.miguel.inventarioapi.model.Produto;
 import dev.miguel.inventarioapi.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
@@ -17,28 +19,39 @@ public class ProdutoService {
     }
 
     // CADASTRAR
-    public Produto cadastrarProduto(Produto produto) {
-        return produtoRepository.save(produto);
+    @Transactional
+    public ProdutoResponseDTO cadastrarProduto(ProdutoRequestDTO dto) {
+        // 1. O Service recebe o (DTO) e precisa transformar na Entidade para o banco entender
+        Produto produto = new Produto();
+        produto.setNome(dto.nome());
+        produto.setSku(dto.sku());
+        produto.setPreco(dto.preco());
+        produto.setQuantidadeEstoque(dto.quantidadeEstoque());
+
+        // 2. Salva no banco de dados
+        Produto produtoSalvo = produtoRepository.save(produto);
+
+        // 3. Transforma a panela salva de volta em um prato limpo para devolver para a web
+        return new ProdutoResponseDTO(produtoSalvo);
     }
 
     // VENDER
-    @Transactional // Garante que, se der erro no meio, o banco desfaz a operação automaticamente
-    public Produto registrarVenda(Long produtoId, Integer quantidadeVendida) {
+    @Transactional
+    public ProdutoResponseDTO registrarVenda(Long produtoId, Integer quantidadeVendida) {
 
-        // 1. Buscamos o produto no banco. Se não achar, "estouramos" um erro.
         Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado com o ID: " + produtoId));
 
-        // 2. Verificamos se há estoque suficiente
         if (produto.getQuantidadeEstoque() < quantidadeVendida) {
             throw new IllegalArgumentException("Estoque insuficiente! Estoque atual: " + produto.getQuantidadeEstoque());
         }
 
-        // 3. Subtraímos o estoque
         Integer novoEstoque = produto.getQuantidadeEstoque() - quantidadeVendida;
         produto.setQuantidadeEstoque(novoEstoque);
 
-        // 4. Salvamos a atualização no banco
-        return produtoRepository.save(produto);
+        Produto produtoAtualizado = produtoRepository.save(produto);
+
+        // Retorna o prato limpo (DTO)
+        return new ProdutoResponseDTO(produtoAtualizado);
     }
 }
