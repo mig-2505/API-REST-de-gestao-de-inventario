@@ -7,7 +7,7 @@ Esta é uma API de simulação de E-commerce, onde é possível cadastrar produt
 ## Tecnologias Utilizadas
 * **Linguagem:** Java 17+
 * **Framework:** Spring Boot 3
-* **Banco de Dados:** Oracle Database (XE)
+* **Banco de Dados:** Oracle Database 
 * **Persistência:** Spring Data JPA / Hibernate
 
 ## O que já foi implementado 
