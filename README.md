@@ -4,7 +4,7 @@ Projeto desenvolvido como portfólio para demonstrar habilidades em **Java 17+ e
 
 Esta API simula o gerenciamento de estoque de um E-commerce, permitindo cadastrar produtos, consultar inventário e registrar vendas com baixa automática de estoque. O projeto conta com validações rígidas de entrada, transações seguras, proteção de dados via DTOs e tratamento global de exceções.
 
-## 🛠️ Tecnologias e Padrões Utilizados
+## Tecnologias e Padrões Utilizados
 * **Linguagem:** Java 17+ (Uso de *Records* para DTOs imutáveis)
 * **Framework:** Spring Boot 3
 * **Banco de Dados:** Oracle Database (XE)
