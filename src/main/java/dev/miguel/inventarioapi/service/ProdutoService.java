@@ -51,7 +51,14 @@ public class ProdutoService {
 
         Produto produtoAtualizado = produtoRepository.save(produto);
 
-        // Retorna o prato limpo (DTO)
         return new ProdutoResponseDTO(produtoAtualizado);
+    }
+
+    // LISTAR TODOS
+    public java.util.List<ProdutoResponseDTO> listarTodos() {
+        return produtoRepository.findAll()
+                .stream()
+                .map(ProdutoResponseDTO::new)
+                .toList();
     }
 }
